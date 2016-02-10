@@ -26,7 +26,6 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_INDEX = "index";
     private static final String KEY_IS_CHEATER = "isCheater";
     private static final Integer REQUEST_CODE_CHEAT = 0;
-    private Boolean mIsCheater;
 
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_oceans, true),
