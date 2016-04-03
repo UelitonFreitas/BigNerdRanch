@@ -14,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.origin.ueliton.criminalintent.R;
-import com.origin.ueliton.criminalintent.activity.CrimeActivity;
 import com.origin.ueliton.criminalintent.model.Crime;
 import com.origin.ueliton.criminalintent.model.CrimeLab;
 

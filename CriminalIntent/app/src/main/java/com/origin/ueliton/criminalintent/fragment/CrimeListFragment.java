@@ -12,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.origin.ueliton.criminalintent.R;
-import com.origin.ueliton.criminalintent.activity.CrimeActivity;
+import com.origin.ueliton.criminalintent.activity.CrimePagerActivity;
 import com.origin.ueliton.criminalintent.model.Crime;
 import com.origin.ueliton.criminalintent.model.CrimeLab;
 
@@ -102,7 +102,7 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
             lastModifiedCrimePosition = getAdapterPosition();
             startActivity(intent);
         }
