@@ -16,6 +16,9 @@
     import com.origin.ueliton.criminalintent.R;
     import com.origin.ueliton.criminalintent.model.Crime;
 
+    import java.text.SimpleDateFormat;
+    import java.util.Locale;
+
     /**
      * A simple {@link Fragment} subclass.
      */
@@ -58,7 +61,10 @@
             });
 
             mDateButton = (Button) view.findViewById(R.id.crime_date);
-            mDateButton.setText(mCrime.getDate().toString());
+
+            String pattern = "EEEE, MMM d, yyy";
+            SimpleDateFormat formatter = new SimpleDateFormat(pattern, new Locale("en", "US"));
+            mDateButton.setText(formatter.format(mCrime.getDate()));
             mDateButton.setEnabled(false);
 
             mSolvedCheckBox = (CheckBox) view.findViewById(R.id.crime_solved);
