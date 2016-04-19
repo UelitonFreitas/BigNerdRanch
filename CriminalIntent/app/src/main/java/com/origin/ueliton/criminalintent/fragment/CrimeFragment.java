@@ -21,6 +21,7 @@ import com.origin.ueliton.criminalintent.model.Crime;
 import com.origin.ueliton.criminalintent.model.CrimeLab;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
@@ -34,10 +35,14 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private Button mTimeButton;
 
     private static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_TIME = "DialogTime";
     private static final String DIALOG_DATE = "DialogDate";
+
     private static final int REQUEST_DATE = 0;
+    private static final int REQUEST_TIME = 1;
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -94,6 +99,20 @@ public class CrimeFragment extends Fragment {
             }
         });
 
+        mTimeButton = (Button) view.findViewById(R.id.crime_time);
+
+        updateTime();
+
+        mTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                TimerPickerFragment dialog =  TimerPickerFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
+                dialog.show(fragmentManager, DIALOG_TIME);
+            }
+        });
+
         mSolvedCheckBox = (CheckBox) view.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -119,10 +138,38 @@ public class CrimeFragment extends Fragment {
             mCrime.setDate(date);
             updateDate();
         }
+
+        if(requestCode == REQUEST_TIME){
+
+            Date crimeTime = (Date) data.getSerializableExtra(TimerPickerFragment.EXTRA_TIME);
+
+            Calendar crimeTimeCalendar = Calendar.getInstance();
+            crimeTimeCalendar.setTime(crimeTime);
+
+            Calendar crimeDate = Calendar.getInstance();
+            crimeDate.setTime(mCrime.getDate());
+            crimeDate.set(Calendar.HOUR, crimeTimeCalendar.get(Calendar.HOUR));
+            crimeDate.set(Calendar.MINUTE, crimeTimeCalendar.get(Calendar.MINUTE));
+
+            mCrime.setDate(crimeDate.getTime());
+
+            updateTime();
+        }
     }
+
 
     private void updateDate() {
         mDateButton.setText(getFormatedDate(mCrime.getDate()));
+    }
+
+    private void updateTime() {
+        mTimeButton.setText(getFormatedTime(mCrime.getDate()));
+    }
+
+    private String getFormatedTime(Date date) {
+        String pattern = "HH:mm:ss";
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern, new Locale("en", "US"));
+        return formatter.format(date);
     }
 
     private String getFormatedDate(Date date) {
