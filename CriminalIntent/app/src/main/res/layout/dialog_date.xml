@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DatePicker
-    android:id="@+id/dialog_date_date_picker"
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:calendarViewShown="false"
-    android:orientation="vertical"/>
+    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android"/>
+
+    <TextView
+        android:id="@+id/text_view_crime_date_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/crime_tittle_date"
+        android:textSize="18sp"
+        android:textColor="@android:color/primary_text_light"
+        android:textStyle="bold"/>
+
+    <DatePicker
+        android:id="@+id/dialog_date_date_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_crime_date_tittle"
+        android:calendarViewShown="false"
+        android:orientation="vertical"/>
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/dialog_date_date_picker"
+        android:text="@android:string/ok"
+        android:background="?android:attr/selectableItemBackground"
+        />
+</RelativeLayout>
