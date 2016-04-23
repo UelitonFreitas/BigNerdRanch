@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.origin.ueliton.criminalintent.R;
+import com.origin.ueliton.criminalintent.activity.DatePickerActivity;
 import com.origin.ueliton.criminalintent.model.Crime;
 import com.origin.ueliton.criminalintent.model.CrimeLab;
 
@@ -55,6 +59,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
@@ -92,10 +97,7 @@ public class CrimeFragment extends Fragment {
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
-                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
+                startActivityForResult(DatePickerActivity.getIntent(getContext(), mCrime.getDate()), REQUEST_DATE);
             }
         });
 
@@ -106,8 +108,9 @@ public class CrimeFragment extends Fragment {
         mTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 FragmentManager fragmentManager = getFragmentManager();
-                TimerPickerFragment dialog =  TimerPickerFragment.newInstance(mCrime.getDate());
+                TimerPickerFragment dialog = TimerPickerFragment.newInstance(mCrime.getDate());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
                 dialog.show(fragmentManager, DIALOG_TIME);
             }
@@ -139,7 +142,7 @@ public class CrimeFragment extends Fragment {
             updateDate();
         }
 
-        if(requestCode == REQUEST_TIME){
+        if (requestCode == REQUEST_TIME) {
 
             Date crimeTime = (Date) data.getSerializableExtra(TimerPickerFragment.EXTRA_TIME);
 
@@ -176,5 +179,23 @@ public class CrimeFragment extends Fragment {
         String pattern = "EEEE, MMM d, yyy";
         SimpleDateFormat formatter = new SimpleDateFormat(pattern, new Locale("en", "US"));
         return formatter.format(date);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete_crime:
+                if (mCrime != null)
+                    CrimeLab.get(getContext()).deleteCrime(mCrime);
+                getActivity().finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

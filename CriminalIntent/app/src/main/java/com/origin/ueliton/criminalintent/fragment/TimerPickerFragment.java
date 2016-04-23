@@ -15,10 +15,8 @@ import android.widget.TimePicker;
 
 import com.origin.ueliton.criminalintent.R;
 
-import java.io.CharArrayReader;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by ueliton on 18/04/16.

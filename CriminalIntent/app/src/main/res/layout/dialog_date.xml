@@ -2,14 +2,16 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    xmlns:android="http://schemas.android.com/apk/res/android"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/text_view_crime_date_tittle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="@string/crime_tittle_date"
@@ -22,8 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_view_crime_date_tittle"
-        android:calendarViewShown="false"
-        android:orientation="vertical"/>
+        android:calendarViewShown="false"/>
 
     <Button
         android:id="@+id/ok_button"
