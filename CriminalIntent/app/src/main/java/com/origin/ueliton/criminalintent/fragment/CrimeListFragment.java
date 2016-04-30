@@ -98,6 +98,10 @@ public class CrimeListFragment extends Fragment {
         public int getItemCount() {
             return mCrimes.size();
         }
+
+        public void setCrimes(List<Crime> crimes) {
+            mCrimes = crimes;
+        }
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -157,8 +161,11 @@ public class CrimeListFragment extends Fragment {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
-            if (lastModifiedCrimePosition == -1)
+            mAdapter.setCrimes(crimes);
+            
+            if (lastModifiedCrimePosition == -1) {
                 mAdapter.notifyDataSetChanged();
+            }
             else
                 mAdapter.notifyItemChanged(lastModifiedCrimePosition);
         }
@@ -197,7 +204,6 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_crime:
-
                 addNewCrime();
                 return true;
 
