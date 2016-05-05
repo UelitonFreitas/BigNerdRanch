@@ -162,7 +162,7 @@ public class CrimeListFragment extends Fragment {
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setCrimes(crimes);
-            
+
             if (lastModifiedCrimePosition == -1) {
                 mAdapter.notifyDataSetChanged();
             }
